@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Simples</title>
     <style>
-        
+        /* Estilo básico para centralizar a calculadora na tela */
         body {
             font-family: Arial, sans-serif;
             display: flex;
@@ -16,6 +16,7 @@
             background-color: #f0f0f0;
         }
         
+        /* Container principal da calculadora */
         .calculator {
             background: #fff;
             padding: 20px;
@@ -30,6 +31,7 @@
             border: groove;
         }
 
+        /* Estilo do visor da calculadora */
         .calculator input[type="text"] {
             width: 98%;
             height: 70px;
@@ -40,12 +42,14 @@
             margin-bottom: 10px;
         }
 
+        /* Grade para organizar os botões */
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 5px;
         }
 
+        /* Estilo padrão para os botões */
         .buttons button {
             height: 60px;
             font-size: 1.6em;
@@ -56,10 +60,12 @@
             color: white;
         }
 
+        /* Efeito hover nos botões */
         .buttons button:hover {
             background-color: #0056b3;
         }
 
+        /* Estilo específico para os operadores */
         .buttons .operator {
             background-color: #135fb1;
         }
@@ -68,9 +74,10 @@
             background-color: #6800e0;
         }
 
+        /* Estilo específico para o botão Clear */
         .buttons .clear {
             background-color: #69c570;
-            grid-column: span 4;
+            grid-column: span 4; /* Ocupa a linha inteira */
         }
 
         .buttons .clear:hover {
@@ -80,9 +87,15 @@
 </head>
 <body>
     <div class="calculator">
+        <!-- Visor onde o resultado e os números digitados aparecem -->
         <input type="text" id="result" disabled>
+        
+        <!-- Contêiner para os botões -->
         <div class="buttons">
+            <!-- Botão Clear para limpar todos os dados -->
             <button class="clear" onclick="clearResult()">Clear</button>
+            
+            <!-- Botões numéricos e operadores -->
             <button onclick="appendNumber('7')">7</button>
             <button onclick="appendNumber('8')">8</button>
             <button onclick="appendNumber('9')">9</button>
@@ -103,41 +116,47 @@
     </div>
 
     <script>
-        let currentInput = '';
-        let previousInput = '';
-        let operator = '';
+        // Variáveis para armazenar os valores e o operador
+        let currentInput = ''; // Número atualmente digitado
+        let previousInput = ''; // Número armazenado antes do operador
+        let operator = ''; // Operador atual
 
+        // Adiciona um número ao visor
         function appendNumber(number) {
-            currentInput += number;
-            updateResult();
+            currentInput += number; // Concatena o número ao valor atual
+            updateResult(); // Atualiza o visor
         }
 
+        // Define o operador para a operação matemática
         function setOperator(op) {
-            if (currentInput === '') return;
-            if (previousInput !== '') calculate();
-            operator = op;
-            previousInput = currentInput;
-            currentInput = '';
+            if (currentInput === '') return; // Não permite definir operador sem um número
+            if (previousInput !== '') calculate(); // Calcula se já houver um número armazenado
+            operator = op; // Armazena o operador
+            previousInput = currentInput; // Move o valor atual para o anterior
+            currentInput = ''; // Limpa o valor atual
         }
 
+        // Realiza o cálculo com os valores e o operador
         function calculate() {
-            if (currentInput === '' || previousInput === '' || operator === '') return;
-            const result = eval(`${previousInput} ${operator} ${currentInput}`);
-            currentInput = result;
-            previousInput = '';
-            operator = '';
-            updateResult();
+            if (currentInput === '' || previousInput === '' || operator === '') return; // Impede cálculos incompletos
+            const result = eval(`${previousInput} ${operator} ${currentInput}`); // Calcula usando eval (melhor evitar em produção)
+            currentInput = result; // Armazena o resultado como valor atual
+            previousInput = ''; // Reseta o valor anterior
+            operator = ''; // Reseta o operador
+            updateResult(); // Atualiza o visor com o resultado
         }
 
+        // Limpa todos os dados e reseta a calculadora
         function clearResult() {
-            currentInput = '';
-            previousInput = '';
-            operator = '';
-            updateResult();
+            currentInput = ''; // Limpa o valor atual
+            previousInput = ''; // Limpa o valor anterior
+            operator = ''; // Reseta o operador
+            updateResult(); // Atualiza o visor
         }
 
+        // Atualiza o visor com o valor atual
         function updateResult() {
-            document.getElementById('result').value = currentInput;
+            document.getElementById('result').value = currentInput; // Exibe o valor atual no input
         }
     </script>
 </body>
